@@ -15,6 +15,8 @@ class CreateMovieLikesTable extends Migration
     {
         Schema::create('movie_likes', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('movie_id');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

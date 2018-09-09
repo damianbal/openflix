@@ -33,8 +33,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 |--------------------------------------------------------------------------
  */
 Route::get('/movies', 'MovieController@index')->name('movies.index');
-
 Route::get('/movie/{id}', 'MovieController@show')->name('movies.show');
+Route::post('/movie/{movie}/like', 'MovieController@like')->middleware('auth:api');
+Route::post('/movie/{movie}/unlike', 'MovieController@unlike')->middleware('auth:api');
+Route::get('/movies/popular', 'MovieController@popular');
 
 /*
 |--------------------------------------------------------------------------
@@ -43,3 +45,10 @@ Route::get('/movie/{id}', 'MovieController@show')->name('movies.show');
  */
 Route::get('/genres', 'GenreController@index')->name('genres.index');
 Route::get('/genres/{genre}', 'GenreController@show')->name('genres.show');
+
+/*
+|--------------------------------------------------------------------------
+| User
+|--------------------------------------------------------------------------
+ */
+Route::get('/user/likes', 'UserController@liked')->middleware('auth:api');

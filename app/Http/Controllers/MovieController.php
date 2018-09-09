@@ -6,9 +6,20 @@ use Illuminate\Http\Request;
 use App\Movie;
 use App\Http\Resources\MovieResource;
 use App\Genre;
+use App\Services\UserService;
+use App\Services\MovieService;
 
 class MovieController extends Controller
 {
+    protected $userService = null;
+    protected $movieService = null;
+
+    public function __construct(UserService $userService, MovieService $movieService)
+    {
+        $this->userService = $userService;
+        $this->movieService = $movieService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -31,49 +42,20 @@ class MovieController extends Controller
         return MovieResource::collection($movies);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function popular()
     {
-        //
+        return MovieResource::collection($this->movieService->getPopular());
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function like(Movie $movie)
     {
-        $m = Movie::find($id);
-        return new MovieResource($m);
+        $this->userService->likeMovie($movie);
+        return [];
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function unlike(Movie $movie)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $this->userService->unlikeMovie($movie);
+        return [];
     }
 }

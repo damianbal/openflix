@@ -152,6 +152,7 @@ return [
          */
         damianbal\Laracan\LaracanServiceProvider::class,
         damianbal\Restpal\RestpalServiceProvider::class,
+        damianbal\Ladasho\LadashoServiceProvider::class,
 
         /*
          * Application Service Providers...

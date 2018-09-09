@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\User;
 use App\MovieLike;
-
+use App\Movie;
 
 class UserService
 {
@@ -12,10 +12,23 @@ class UserService
 
     }
 
+    public function getLikedMovies(User $user)
+    {
+        $likes = $user->liked()->get();
+
+        $l = [];
+
+        foreach($likes as $like) {
+            $l[] = $like->movie()->first();
+        }
+
+        return $l;
+    }
+
     public function likesMovie(Movie $movie)
     {
         $movieLikes = MovieLike::where([
-            'user_id' => auth()->user()->id,
+            'user_id' => auth('api')->user()->id,
             'movie_id' => $movie->id
         ]);
 
@@ -25,8 +38,8 @@ class UserService
     public function likeMovie(Movie $movie)
     {
         if(!$this->likesMovie($movie)) {
-            MovieLike::create([
-                'user_id' => auth()->user()->id,
+            return MovieLike::create([
+                'user_id' => auth('api')->user()->id,
                 'movie_id' => $movie->id
             ]);
         }
@@ -37,7 +50,7 @@ class UserService
         if($this->likesMovie($movie)) {
             // unlike
             MovieLike::where([
-                'user_id' => auth()->user()->id,
+                'user_id' => auth('api')->user('api')->id,
                 'movie_id' => $movie->id
             ])->delete();
         }
