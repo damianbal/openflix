@@ -1,7 +1,7 @@
 # Openflix
 > Platform to watch movies, only API is here.
 
-See [openflix-vue](https//github.com/damianbal/openflix-vue) to see front-end for that API.
+See [openflix-vue](https://github.com/damianbal/openflix-vue) to see front-end for that API.
 
 ## Installation
 
