@@ -15,7 +15,7 @@ php artisan serve
 
 Of course you need to setup database connection in .env file, create it based on .env.example
 
-## Build with
+## Made with
 * Laravel 5
 
 ## Meta
